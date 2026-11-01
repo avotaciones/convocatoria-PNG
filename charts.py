@@ -25,36 +25,29 @@ def chart_estado(df_estado):
     return fig
 
 
-def chart_gauge(admitidos, no_admitidos, pct):
-    if admitidos + no_admitidos == 0:
-        fig = go.Figure(go.Indicator(
-            mode="number", value=0,
-            number={"suffix": "%", "font": {"color": AZUL}},
-        ))
+def chart_funnel(admitidos, no_admitidos):
+    total = admitidos + no_admitidos
+    if total == 0:
+        fig = go.Figure()
         fig.update_layout(height=300, margin=dict(t=10, b=10))
         return fig
 
-    fig = go.Figure(go.Pie(
-        values=[admitidos, no_admitidos],
-        labels=["Admitidos", "No admitidos"],
-        hole=0.7,
-        marker_colors=[VERDE, ROJO],
-        sort=False,
-        direction="clockwise",
+    fig = go.Figure(go.Funnel(
+        y=["Total", "Admitidos", "No admitidos"],
+        x=[total, admitidos, no_admitidos],
+        textinfo="value+percent initial",
+        textfont=dict(size=13, color="white"),
+        marker=dict(color=[AZUL, VERDE, ROJO]),
+        connector={"line": {"color": "#cbd5e1", "width": 1}},
     ))
     fig.update_layout(
-        margin=dict(t=10, b=10, l=10, r=10), height=300,
-        annotations=[dict(
-            text=(f"{pct:.1f}%<br>"
-                  f"<span style='font-size:11px;color:#6b7280'>admitidos</span>"),
-            x=0.5, y=0.5, showarrow=False,
-            font=dict(size=22, color="#2044b8"),
-        )],
-        legend=dict(orientation="h", y=-0.1),
+        height=300,
+        margin=dict(t=10, b=10, l=10, r=10),
+        showlegend=False,
+        funnelgap=0.02,
     )
     return fig
-
-
+    
 def chart_convocatoria(df_conv):
     fig = px.bar(df_conv, x="convocatoria", y="total", text="total",
                  color_discrete_sequence=[AZUL])
