@@ -4,7 +4,7 @@ import streamlit as st
 
 from datos import cargar_datos
 from charts import (
-    chart_estado, chart_gauge, chart_convocatoria, chart_causal,
+    chart_estado, chart_funnel, chart_convocatoria, chart_causal,
 )
 
 # ------------------------------------------------------------
@@ -201,12 +201,11 @@ with g1:
     st.plotly_chart(chart_estado(por_estado), use_container_width=True)
 
 with g2:
-    st.markdown("#### % Admitidos vs No admitidos")
+    st.markdown("#### Embudo del proceso de selección")
     st.plotly_chart(
-        chart_gauge(admitidos, no_admitidos, pct),
+        chart_funnel(admitidos, no_admitidos),
         use_container_width=True,
     )
-
 st.markdown("#### Registros por Convocatoria")
 por_conv = (
     filtrado.groupby("convocatoria", observed=True).size()
