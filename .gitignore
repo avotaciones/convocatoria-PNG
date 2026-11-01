@@ -1,0 +1,21 @@
+# Datos crudos y temporales — no subir al repo
+*.xlsx
+*.xls
+*.csv
+*.json
+!datos_meta.txt
+
+# Entornos y caché
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# Secrets y config local
+.streamlit/secrets.toml
+
+# Sistema
+.DS_Store
+Thumbs.db
