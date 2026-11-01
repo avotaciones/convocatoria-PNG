@@ -13,8 +13,59 @@ from charts import (
 st.set_page_config(
     page_title="Dashboard Aspirantes · Procuraduría 2026",
     page_icon="📊",
-    layout="wide",
+    layout="centered",              # ← "centered" en vez de "wide"
+    initial_sidebar_state="collapsed",  # ← clave: sidebar oculto en móvil
 )
+
+st.markdown("""
+<style>
+/* ====== MÓVIL: ajustes de layout ====== */
+@media (max-width: 768px) {
+    /* Padding reducido para aprovechar el ancho */
+    .block-container {
+        padding-left: 0.8rem !important;
+        padding-right: 0.8rem !important;
+        padding-top: 1rem !important;
+    }
+
+    /* KPIs: forzar una sola columna en móvil */
+    /* Streamlit apila columnas automáticamente, pero el gap puede ser grande */
+    [data-testid="stHorizontalBlock"] {
+        gap: 0.5rem !important;
+    }
+
+    /* Sidebar: que no ocupe toda la pantalla al abrirse */
+    section[data-testid="stSidebar"] {
+        width: 85vw !important;
+        min-width: 85vw !important;
+    }
+
+    /* Títulos más compactos */
+    h1, h2, h3 {
+        font-size: 1.2rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* Tabla: permitir scroll horizontal si es necesario */
+    [data-testid="stDataFrame"] {
+        overflow-x: auto !important;
+    }
+
+    /* Botones: que ocupen todo el ancho para facilitar el toque */
+    .stButton > button {
+        width: 100% !important;
+    }
+}
+
+/* ====== MÓVILES PEQUEÑOS ====== */
+@media (max-width: 480px) {
+    .block-container {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <style>
